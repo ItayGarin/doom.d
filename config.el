@@ -57,10 +57,36 @@
 ;; -------------- Spacemacs Compatability -------------------
 ;; ----------------------------------------------------------
 
-;; evil-escape
 (setq-default evil-escape-key-sequence "fd")
 
-(map! :leader "SPC" #'counsel-M-x)
-(map! :leader "f f" #'projectile-find-file)
-(map! :leader "w m" #'doom/window-maximize-buffer)
-(map! :leader "g s" #'magit-status)
+(map! :leader "SPC" 'counsel-M-x)
+(map! :leader "f f" 'projectile-find-file)
+(map! :leader "f F" 'find-file)
+
+(map! :leader "w m" 'doom/window-maximize-buffer)
+(map! :leader "g s" 'magit-status)
+
+;; Instead of "C-w" (doom/delete-backward-word)
+(define-key! ivy-minibuffer-map
+  "C-h" #'ivy-backward-kill-word)
+
+;; spacemacs/alternate-buffer
+(defun spacemacs/alternate-buffer (&optional window)
+  "Switch back and forth between current and last buffer in the
+current window."
+  (interactive)
+  (let ((current-buffer (window-buffer window))
+        (buffer-predicate
+         (frame-parameter (window-frame window) 'buffer-predicate)))
+    ;; switch to first buffer previously shown in this window that matches
+    ;; frame-parameter `buffer-predicate'
+    (switch-to-buffer
+     (or (cl-find-if (lambda (buffer)
+                       (and (not (eq buffer current-buffer))
+                            (or (null buffer-predicate)
+                                (funcall buffer-predicate buffer))))
+                     (mapcar #'car (window-prev-buffers window)))
+         ;; `other-buffer' honors `buffer-predicate' so no need to filter
+         (other-buffer current-buffer t)))))
+
+(map! :leader "TAB" 'spacemacs/alternate-buffer)
