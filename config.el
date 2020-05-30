@@ -63,3 +63,4 @@
 (map! :leader "SPC" #'counsel-M-x)
 (map! :leader "f f" #'projectile-find-file)
 (map! :leader "w m" #'doom/window-maximize-buffer)
+(map! :leader "g s" #'magit-status)
