@@ -90,3 +90,12 @@ current window."
          (other-buffer current-buffer t)))))
 
 (map! :leader "TAB" 'spacemacs/alternate-buffer)
+
+(defun spacemacs/evil-search-clear-highlight ()
+  "Clear evil-search or evil-ex-search persistent highlights."
+  (interactive)
+  (case evil-search-module
+    ('isearch (evil-search-highlight-persist-remove-all))
+    ('evil-search (evil-ex-nohighlight))))
+
+(map! :leader "s c" 'spacemacs/evil-search-clear-highlight)
