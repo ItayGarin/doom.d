@@ -13,6 +13,7 @@
 (map! :leader "w m" 'doom/window-maximize-buffer)
 (map! :leader "g s" 'magit-status)
 (map! :leader "?" 'counsel-descbinds)
+(map! :leader "/" '+default/search-project-for-symbol-at-point)
 
 ;; Instead of "C-w" (doom/delete-backward-word)
 (define-key! ivy-minibuffer-map
