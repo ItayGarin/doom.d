@@ -15,6 +15,11 @@
 (map! :leader "?" 'counsel-descbinds)
 (map! :leader "/" '+default/search-project-for-symbol-at-point)
 
+(map! :leader
+      (:prefix-map (";" . "Comment")
+       :desc "Comment"  ";"   #'comment-dwim
+       :desc "Eval"     "0"   #'pp-eval-expression))
+
 ;; Instead of "C-w" (doom/delete-backward-word)
 (define-key! ivy-minibuffer-map
   "C-h" #'ivy-backward-kill-word)
