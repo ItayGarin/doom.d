@@ -54,3 +54,6 @@
 
 (load "~/.doom.d/spacemacs")
 (require 'spacemacs)
+
+(load "~/.doom.d/ui")
+(require 'ui)
